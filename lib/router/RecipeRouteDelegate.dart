@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_navigation_part_2/AppShell.dart';
 import 'package:flutter_navigation_part_2/router/RecipeDetailsPath.dart';

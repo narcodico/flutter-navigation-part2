@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_navigation_part_2/router/RecipeRoutePath.dart';
 import 'package:flutter_navigation_part_2/screens/FadeAnimationPage.dart';
@@ -43,7 +42,7 @@ class InnerRouteDelegate extends RouterDelegate<RecipeRoutePath>
           if (appState.selectedRecipe != null)
             MaterialPage(
               key: ValueKey(appState.selectedRecipe),
-              child: RecipeDetailsScreen(recipe: appState.selectedRecipe),
+              child: RecipeDetailsScreen(recipe: appState.selectedRecipe!),
             )
         ] else
           FadeAnimationPage(

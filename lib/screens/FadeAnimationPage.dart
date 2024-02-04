@@ -3,7 +3,7 @@ import 'package:flutter/cupertino.dart';
 class FadeAnimationPage extends Page {
   final Widget child;
 
-  FadeAnimationPage({Key key, @required this.child}) : super(key: key);
+  FadeAnimationPage({super.key, required this.child});
 
   @override
   Route createRoute(BuildContext context) {

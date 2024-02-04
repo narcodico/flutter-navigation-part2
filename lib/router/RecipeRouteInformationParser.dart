@@ -9,14 +9,14 @@ class RecipeRouteInformationParser
   @override
   Future<RecipeRoutePath> parseRouteInformation(
       RouteInformation routeInformation) async {
-    final uri = Uri.parse(routeInformation.location);
+    final uri = routeInformation.uri;
 
     if (uri.pathSegments.isNotEmpty && uri.pathSegments.first == 'settings') {
       return RecipeSettingPath();
     } else {
       if (uri.pathSegments.length >= 2) {
         if (uri.pathSegments[0] == 'recipe') {
-          return RecipeDetailsPath(int.tryParse(uri.pathSegments[1]));
+          return RecipeDetailsPath(int.parse(uri.pathSegments[1]));
         }
       }
       return RecipeListPath();
@@ -24,15 +24,15 @@ class RecipeRouteInformationParser
   }
 
   @override
-  RouteInformation restoreRouteInformation(RecipeRoutePath config) {
+  RouteInformation? restoreRouteInformation(RecipeRoutePath config) {
     if (config is RecipeListPath) {
-      return RouteInformation(location: '/home');
+      return RouteInformation(uri: Uri(path: '/home'));
     }
     if (config is RecipeDetailsPath) {
-      return RouteInformation(location: '/recipe/${config.id}');
+      return RouteInformation(uri: Uri(path: '/recipe/${config.id}'));
     }
     if (config is RecipeSettingPath) {
-      return RouteInformation(location: '/settings');
+      return RouteInformation(uri: Uri(path: '/settings'));
     }
     return null;
   }

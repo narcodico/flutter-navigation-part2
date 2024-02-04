@@ -3,17 +3,17 @@ import 'package:flutter_navigation_part_2/router/InnerRouteDelegate.dart';
 import 'package:flutter_navigation_part_2/state/CakeRecipeState.dart';
 
 class AppShell extends StatefulWidget {
-  CakeRecipeState appState;
+  final CakeRecipeState appState;
 
-  AppShell({@required this.appState});
+  AppShell({required this.appState});
 
   @override
   _AppState createState() => _AppState();
 }
 
 class _AppState extends State<AppShell> {
-  InnerRouteDelegate _innerRouteDelegate;
-  ChildBackButtonDispatcher _backButtonDispatcher;
+  late final InnerRouteDelegate _innerRouteDelegate;
+  late final ChildBackButtonDispatcher _backButtonDispatcher;
 
   @override
   void initState() {
@@ -25,7 +25,7 @@ class _AppState extends State<AppShell> {
   void didChangeDependencies() {
     super.didChangeDependencies();
     _backButtonDispatcher = Router.of(context)
-        .backButtonDispatcher
+        .backButtonDispatcher!
         .createChildBackButtonDispatcher();
   }
 

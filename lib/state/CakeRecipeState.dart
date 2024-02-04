@@ -3,7 +3,7 @@ import 'package:flutter_navigation_part_2/models/recipe_model.dart';
 
 class CakeRecipeState extends ChangeNotifier {
   int _selectedIndex;
-  Recipe _selectedRecipe;
+  Recipe? _selectedRecipe;
 
   final List<Recipe> recipes = [
     Recipe(name: 'Pumpkin Cake', catagory: 'Squash recipes', chef: 'Sue Case'),
@@ -33,16 +33,16 @@ class CakeRecipeState extends ChangeNotifier {
     notifyListeners();
   }
 
-  set selectedRecipe(Recipe value) {
+  set selectedRecipe(Recipe? value) {
     _selectedRecipe = value;
     notifyListeners();
   }
 
-  Recipe get selectedRecipe => _selectedRecipe;
+  Recipe? get selectedRecipe => _selectedRecipe;
 
   int getSelectedRecipeById() {
-    if (!recipes.contains(_selectedRecipe)) return 0;
-    return recipes.indexOf(_selectedRecipe);
+    if (_selectedRecipe == null || !recipes.contains(_selectedRecipe)) return 0;
+    return recipes.indexOf(_selectedRecipe!);
   }
 
   void setSelectedRecipeById(int id) {

@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_navigation_part_2/models/recipe_model.dart';
 
@@ -7,8 +6,8 @@ class RecipeListScreen extends StatelessWidget {
   final ValueChanged<Recipe> onTap;
 
   RecipeListScreen({
-    @required this.recipes,
-    @required this.onTap,
+    required this.recipes,
+    required this.onTap,
   });
 
   @override

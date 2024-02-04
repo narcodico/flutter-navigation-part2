@@ -2,10 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_navigation_part_2/models/recipe_model.dart';
 
 class RecipeDetailsScreen extends StatelessWidget {
-  final ValueKey key;
   final Recipe recipe;
 
-  RecipeDetailsScreen({this.key, @required this.recipe});
+  const RecipeDetailsScreen({required this.recipe, super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -13,7 +12,9 @@ class RecipeDetailsScreen extends StatelessWidget {
       appBar: AppBar(
         leading: IconButton(
           icon: Icon(Icons.arrow_back),
-          onPressed: () { Navigator.of(context).pop(); },
+          onPressed: () {
+            Navigator.of(context).pop();
+          },
         ),
       ),
       body: Padding(
@@ -21,21 +22,19 @@ class RecipeDetailsScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-
-            if (this.recipe != null) ...[
+            ...[
               Text(this.recipe.name,
-                  style: Theme.of(context).textTheme.headline5),
+                  style: Theme.of(context).textTheme.headlineSmall),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(this.recipe.catagory,
-                      style: Theme.of(context).textTheme.subtitle1),
+                      style: Theme.of(context).textTheme.titleMedium),
                   Text(this.recipe.chef,
-                      style: Theme.of(context).textTheme.subtitle2),
+                      style: Theme.of(context).textTheme.titleSmall),
                 ],
               ),
-            ] else
-              Text('error printing this recipe'),
+            ],
           ],
         ),
       ),
