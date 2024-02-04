@@ -12,12 +12,10 @@ class AppRouteInformationParser extends RouteInformationParser<AppRoutePath> {
 
     if (uri.pathSegments.isNotEmpty && uri.pathSegments.first == 'settings') {
       return SettingsRoutePath();
+    } else if (uri.pathSegments.length == 2 &&
+        uri.pathSegments[0] == 'listings') {
+      return ListingRoutePath(int.parse(uri.pathSegments[1]));
     } else {
-      if (uri.pathSegments.length >= 2) {
-        if (uri.pathSegments[0] == 'recipe') {
-          return ListingRoutePath(int.parse(uri.pathSegments[1]));
-        }
-      }
       return ListingsRoutePath();
     }
   }
@@ -28,7 +26,7 @@ class AppRouteInformationParser extends RouteInformationParser<AppRoutePath> {
       return RouteInformation(uri: Uri(path: '/listings'));
     }
     if (config is ListingRoutePath) {
-      return RouteInformation(uri: Uri(path: '/recipe/${config.id}'));
+      return RouteInformation(uri: Uri(path: '/listings/${config.id}'));
     }
     if (config is SettingsRoutePath) {
       return RouteInformation(uri: Uri(path: '/settings'));

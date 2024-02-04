@@ -9,16 +9,16 @@ void main() {
 }
 
 class App extends StatelessWidget {
-  final AppRouterDelegate _recipeRouteDelegate = AppRouterDelegate();
-  final AppRouteInformationParser _informationParser =
+  final AppRouterDelegate _appRouteDelegate = AppRouterDelegate();
+  final AppRouteInformationParser _appRouteInformationParser =
       AppRouteInformationParser();
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
       title: 'Nested Route',
-      routeInformationParser: _informationParser,
-      routerDelegate: _recipeRouteDelegate,
+      routeInformationParser: _appRouteInformationParser,
+      routerDelegate: _appRouteDelegate,
     );
   }
 }

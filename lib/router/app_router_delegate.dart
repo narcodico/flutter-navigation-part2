@@ -22,10 +22,10 @@ class AppRouterDelegate extends RouterDelegate<AppRoutePath>
     if (config is ListingsRoutePath) {
       // homeScreen
       appState.selectedIndex = 0;
-      appState.selectedRecipe = null;
+      appState.selectedListing = null;
     } else if (config is ListingRoutePath) {
       // nested home/ details screen
-      appState.setSelectedRecipeById(config.id);
+      appState.setSelectedListingById(config.id);
     } else if (config is SettingsRoutePath) {
       // setting screen
       appState.selectedIndex = 1;
@@ -40,8 +40,8 @@ class AppRouterDelegate extends RouterDelegate<AppRoutePath>
         if (!route.didPop(result)) {
           return false;
         }
-        if (appState.selectedRecipe != null) {
-          appState.selectedRecipe = null;
+        if (appState.selectedListing != null) {
+          appState.selectedListing = null;
         }
         notifyListeners();
         return true;
@@ -59,10 +59,10 @@ class AppRouterDelegate extends RouterDelegate<AppRoutePath>
     if (appState.selectedIndex == 1) {
       return SettingsRoutePath();
     } else {
-      if (appState.selectedRecipe == null) {
+      if (appState.selectedListing == null) {
         return ListingsRoutePath();
       } else {
-        return ListingRoutePath(appState.getSelectedRecipeById());
+        return ListingRoutePath(appState.getSelectedListingById());
       }
     }
   }

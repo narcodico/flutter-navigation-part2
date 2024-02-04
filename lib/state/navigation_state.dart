@@ -39,20 +39,20 @@ class NavigationState extends ChangeNotifier {
     notifyListeners();
   }
 
-  set selectedRecipe(Listing? value) {
+  set selectedListing(Listing? value) {
     _selectedListing = value;
     notifyListeners();
   }
 
-  Listing? get selectedRecipe => _selectedListing;
+  Listing? get selectedListing => _selectedListing;
 
-  int getSelectedRecipeById() {
+  int getSelectedListingById() {
     if (_selectedListing == null || !listings.contains(_selectedListing))
       return 0;
     return listings.indexOf(_selectedListing!);
   }
 
-  void setSelectedRecipeById(int id) {
+  void setSelectedListingById(int id) {
     if (id < 0 || id > listings.length - 1) {
       return;
     }

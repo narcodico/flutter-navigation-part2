@@ -33,28 +33,28 @@ class ListingsRouterDelegate extends RouterDelegate<AppRoutePath>
           MaterialPage(
             child: ListingsPage(
               listings: appState.listings,
-              onTap: (recipe) {
-                appState.selectedRecipe = recipe;
+              onTap: (listing) {
+                appState.selectedListing = listing;
                 notifyListeners();
               },
             ),
-            name: '/listings',
+            // name: '/listings',
           ),
-          if (appState.selectedRecipe != null)
+          if (appState.selectedListing != null)
             MaterialPage(
-              key: ValueKey(appState.selectedRecipe),
-              child: ListingPage(listing: appState.selectedRecipe!),
-              name: '/recipe/${appState.selectedRecipe!.name}',
+              key: ValueKey(appState.selectedListing),
+              child: ListingPage(listing: appState.selectedListing!),
+              // name: '/listings/${appState.selectedListing!.name}',
             )
         ] else
           MaterialPage(
             child: SettingsPage(),
             key: ValueKey('Setting'),
-            name: '/settings',
+            // name: '/settings',
           )
       ],
       onPopPage: (route, result) {
-        appState.selectedRecipe = null;
+        appState.selectedListing = null;
         notifyListeners();
         return route.didPop(result);
       },
