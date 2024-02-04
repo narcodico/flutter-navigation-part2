@@ -25,7 +25,7 @@ class AppRouteInformationParser extends RouteInformationParser<AppRoutePath> {
   @override
   RouteInformation? restoreRouteInformation(AppRoutePath config) {
     if (config is ListingsRoutePath) {
-      return RouteInformation(uri: Uri(path: '/home'));
+      return RouteInformation(uri: Uri(path: '/listings'));
     }
     if (config is ListingRoutePath) {
       return RouteInformation(uri: Uri(path: '/recipe/${config.id}'));

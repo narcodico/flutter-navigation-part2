@@ -38,7 +38,7 @@ class ListingsRouterDelegate extends RouterDelegate<AppRoutePath>
                 notifyListeners();
               },
             ),
-            name: '/home',
+            name: '/listings',
           ),
           if (appState.selectedRecipe != null)
             MaterialPage(

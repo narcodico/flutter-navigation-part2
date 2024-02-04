@@ -5,6 +5,13 @@ class NavigationState extends ChangeNotifier {
   int _selectedIndex;
   Listing? _selectedListing;
 
+  bool _isAuthenticated;
+  bool get isAuthenticated => _isAuthenticated;
+  set isAuthenticated(bool authenticated) {
+    _isAuthenticated = authenticated;
+    notifyListeners();
+  }
+
   final List<Listing> listings = [
     Listing(name: 'Pumpkin Cake', catagory: 'Squash recipes', chef: 'Sue Case'),
     Listing(
@@ -21,15 +28,14 @@ class NavigationState extends ChangeNotifier {
         chef: 'Sarah'),
   ];
 
-  NavigationState() : _selectedIndex = 0;
+  NavigationState()
+      : _selectedIndex = 0,
+        _isAuthenticated = false;
 
   int get selectedIndex => _selectedIndex;
 
   set selectedIndex(int v) {
     _selectedIndex = v;
-    if (_selectedIndex == 1) {
-      _selectedListing = null;
-    }
     notifyListeners();
   }
 
