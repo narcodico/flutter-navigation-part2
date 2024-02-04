@@ -1,24 +1,24 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_navigation_part_2/router/InnerRouteDelegate.dart';
-import 'package:flutter_navigation_part_2/state/CakeRecipeState.dart';
+import 'package:flutter_navigation_part_2/router/listings_router_delegate.dart';
+import 'package:flutter_navigation_part_2/state/navigation_state.dart';
 
 class AppShell extends StatefulWidget {
-  final CakeRecipeState appState;
+  final NavigationState navigationState;
 
-  AppShell({required this.appState});
+  AppShell({required this.navigationState});
 
   @override
   _AppState createState() => _AppState();
 }
 
 class _AppState extends State<AppShell> {
-  late final InnerRouteDelegate _innerRouteDelegate;
+  late final ListingsRouterDelegate _listingsRouteDelegate;
   late final ChildBackButtonDispatcher _backButtonDispatcher;
 
   @override
   void initState() {
     super.initState();
-    _innerRouteDelegate = InnerRouteDelegate(widget.appState);
+    _listingsRouteDelegate = ListingsRouterDelegate(widget.navigationState);
   }
 
   @override
@@ -32,15 +32,15 @@ class _AppState extends State<AppShell> {
   @override
   void didUpdateWidget(covariant AppShell oldWidget) {
     super.didUpdateWidget(oldWidget);
-    _innerRouteDelegate.appState = widget.appState;
+    _listingsRouteDelegate.appState = widget.navigationState;
   }
 
   @override
   Widget build(BuildContext context) {
-    var appState = widget.appState;
+    var navigationState = widget.navigationState;
     return Scaffold(
       body: Router(
-        routerDelegate: _innerRouteDelegate,
+        routerDelegate: _listingsRouteDelegate,
         backButtonDispatcher: _backButtonDispatcher,
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -54,9 +54,9 @@ class _AppState extends State<AppShell> {
             label: 'Settings',
           ),
         ],
-        currentIndex: appState.selectedIndex,
+        currentIndex: navigationState.selectedIndex,
         onTap: (inx) {
-          appState.selectedIndex = inx;
+          navigationState.selectedIndex = inx;
         },
       ),
     );

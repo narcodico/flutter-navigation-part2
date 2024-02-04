@@ -1,5 +1,5 @@
-class Recipe {
-  const Recipe({
+class Listing {
+  const Listing({
     required this.catagory,
     required this.chef,
     required this.name,
