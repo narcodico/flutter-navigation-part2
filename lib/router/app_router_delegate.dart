@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_navigation_part_2/router/app_route_path.dart';
 import 'package:flutter_navigation_part_2/router/listing_route_path.dart';
@@ -21,17 +23,23 @@ class AppRouterDelegate extends RouterDelegate<AppRoutePath>
 
   @override
   Future<void> setNewRoutePath(AppRoutePath config) async {
+    log('app: $config');
     if (config is ListingsRoutePath) {
-      // homeScreen
-      navigationState.selectedIndex = 0;
       navigationState.selectedListing = null;
     } else if (config is ListingRoutePath) {
-      // nested home/ details screen
       navigationState.setSelectedListingById(config.id);
-    } else if (config is SettingsRoutePath) {
-      // setting screen
-      navigationState.selectedIndex = 1;
     }
+    // if (config is ListingsRoutePath) {
+    //   // homeScreen
+    //   navigationState.selectedIndex = 0;
+    //   navigationState.selectedListing = null;
+    // } else if (config is ListingRoutePath) {
+    //   // nested home/ details screen
+    //   navigationState.setSelectedListingById(config.id);
+    // } else if (config is SettingsRoutePath) {
+    //   // setting screen
+    //   navigationState.selectedIndex = 1;
+    // }
   }
 
   @override

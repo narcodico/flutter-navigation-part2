@@ -38,7 +38,7 @@ class _ListingsFlowState extends State<ListingsFlow> {
   @override
   void didUpdateWidget(covariant ListingsFlow oldWidget) {
     super.didUpdateWidget(oldWidget);
-    _listingsRouteDelegate.appState = widget.navigationState;
+    _listingsRouteDelegate.navigationState = widget.navigationState;
   }
 
   @override
