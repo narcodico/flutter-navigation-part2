@@ -28,7 +28,7 @@ class ListingsPage extends StatelessWidget {
                   Text(listing.chef),
                 ],
               ),
-              onTap: () => this.onTap(listing),
+              onTap: () => onTap(listing),
             )
         ],
       ),

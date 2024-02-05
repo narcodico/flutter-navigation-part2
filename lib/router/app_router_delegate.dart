@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_navigation_part_2/app_shell.dart';
 import 'package:flutter_navigation_part_2/router/app_route_path.dart';
 import 'package:flutter_navigation_part_2/router/listing_route_path.dart';
 import 'package:flutter_navigation_part_2/router/listings_route_path.dart';
 import 'package:flutter_navigation_part_2/router/settings_route_path.dart';
+import 'package:flutter_navigation_part_2/screens/app_shell.dart';
+import 'package:flutter_navigation_part_2/screens/listings_flow.dart';
+import 'package:flutter_navigation_part_2/screens/studio_flow.dart';
 import 'package:flutter_navigation_part_2/state/navigation_state.dart';
 
 class AppRouterDelegate extends RouterDelegate<AppRoutePath>
@@ -11,58 +13,61 @@ class AppRouterDelegate extends RouterDelegate<AppRoutePath>
   final GlobalKey<NavigatorState> navigatorKey;
 
   // get app state instance
-  NavigationState appState = NavigationState();
+  NavigationState navigationState = NavigationState();
 
   AppRouterDelegate() : navigatorKey = GlobalKey<NavigatorState>() {
-    appState.addListener(notifyListeners);
+    navigationState.addListener(notifyListeners);
   }
 
   @override
   Future<void> setNewRoutePath(AppRoutePath config) async {
     if (config is ListingsRoutePath) {
       // homeScreen
-      appState.selectedIndex = 0;
-      appState.selectedListing = null;
+      navigationState.selectedIndex = 0;
+      navigationState.selectedListing = null;
     } else if (config is ListingRoutePath) {
       // nested home/ details screen
-      appState.setSelectedListingById(config.id);
+      navigationState.setSelectedListingById(config.id);
     } else if (config is SettingsRoutePath) {
       // setting screen
-      appState.selectedIndex = 1;
+      navigationState.selectedIndex = 1;
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Navigator(
-      key: this.navigatorKey,
-      onPopPage: (route, result) {
-        if (!route.didPop(result)) {
-          return false;
-        }
-        if (appState.selectedListing != null) {
-          appState.selectedListing = null;
-        }
-        notifyListeners();
-        return true;
-      },
-      pages: [
-        MaterialPage(
-          child: AppShell(navigationState: appState), // appShell
-        ),
-      ],
+    return AppShell(
+      child: Navigator(
+        key: this.navigatorKey,
+        onPopPage: (route, result) {
+          if (!route.didPop(result)) {
+            return false;
+          }
+          if (navigationState.selectedListing != null) {
+            navigationState.selectedListing = null;
+          }
+          notifyListeners();
+          return true;
+        },
+        pages: [
+          if (navigationState.isAuthenticated)
+            StudioFlow.page(navigationState: navigationState)
+          else
+            ListingsFlow.page(navigationState: navigationState),
+        ],
+      ),
     );
   }
 
   @override
   AppRoutePath? get currentConfiguration {
-    if (appState.selectedIndex == 1) {
+    if (navigationState.selectedIndex == 1) {
       return SettingsRoutePath();
     } else {
-      if (appState.selectedListing == null) {
+      if (navigationState.selectedListing == null) {
         return ListingsRoutePath();
       } else {
-        return ListingRoutePath(appState.getSelectedListingById());
+        return ListingRoutePath(navigationState.getSelectedListingById());
       }
     }
   }

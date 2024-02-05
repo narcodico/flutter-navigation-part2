@@ -2,16 +2,22 @@ import 'package:flutter/material.dart';
 import 'package:flutter_navigation_part_2/router/listings_router_delegate.dart';
 import 'package:flutter_navigation_part_2/state/navigation_state.dart';
 
-class AppShell extends StatefulWidget {
+class ListingsFlow extends StatefulWidget {
   final NavigationState navigationState;
 
-  AppShell({required this.navigationState});
+  const ListingsFlow({required this.navigationState});
+
+  static MaterialPage<void> page({required NavigationState navigationState}) =>
+      MaterialPage(
+        key: ValueKey('listings-flow'),
+        child: ListingsFlow(navigationState: navigationState),
+      );
 
   @override
-  _AppState createState() => _AppState();
+  _ListingsFlowState createState() => _ListingsFlowState();
 }
 
-class _AppState extends State<AppShell> {
+class _ListingsFlowState extends State<ListingsFlow> {
   late final ListingsRouterDelegate _listingsRouteDelegate;
   late final ChildBackButtonDispatcher _backButtonDispatcher;
 
@@ -30,34 +36,17 @@ class _AppState extends State<AppShell> {
   }
 
   @override
-  void didUpdateWidget(covariant AppShell oldWidget) {
+  void didUpdateWidget(covariant ListingsFlow oldWidget) {
     super.didUpdateWidget(oldWidget);
     _listingsRouteDelegate.appState = widget.navigationState;
   }
 
   @override
   Widget build(BuildContext context) {
-    var navigationState = widget.navigationState;
     return Scaffold(
       body: Router(
         routerDelegate: _listingsRouteDelegate,
         backButtonDispatcher: _backButtonDispatcher,
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Settings',
-          ),
-        ],
-        currentIndex: navigationState.selectedIndex,
-        onTap: (inx) {
-          navigationState.selectedIndex = inx;
-        },
       ),
     );
   }
