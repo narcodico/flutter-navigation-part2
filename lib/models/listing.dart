@@ -1,11 +1,11 @@
 class Listing {
   const Listing({
-    required this.catagory,
+    required this.category,
     required this.chef,
     required this.name,
   });
 
   final String name;
-  final String catagory;
+  final String category;
   final String chef;
 }

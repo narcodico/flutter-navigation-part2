@@ -1,9 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_navigation_part_2/models/listing.dart';
 
+import '../models/item.dart';
+
 class NavigationState extends ChangeNotifier {
   int _selectedIndex;
-  Listing? _selectedListing;
 
   bool _isAuthenticated;
   bool get isAuthenticated => _isAuthenticated;
@@ -13,18 +14,18 @@ class NavigationState extends ChangeNotifier {
   }
 
   final List<Listing> listings = [
-    Listing(name: 'Pumpkin Cake', catagory: 'Squash recipes', chef: 'Sue Case'),
+    Listing(name: 'Pumpkin Cake', category: 'Squash recipes', chef: 'Sue Case'),
     Listing(
         name: "Grandma's Chocolate Texas Sheet Cake",
-        catagory: 'Sheet cake',
+        category: 'Sheet cake',
         chef: 'Bakah Miller'),
     Listing(
         name: 'Apple Upside-Down cake',
-        catagory: 'Apple desserts',
+        category: 'Apple desserts',
         chef: 'Amber'),
     Listing(
         name: 'Maple Buttercream Frosting',
-        catagory: 'Buttercream frosting',
+        category: 'Buttercream frosting',
         chef: 'Sarah'),
   ];
 
@@ -39,24 +40,40 @@ class NavigationState extends ChangeNotifier {
     notifyListeners();
   }
 
+  Listing? get selectedListing => _selectedListing;
+  Listing? _selectedListing;
   set selectedListing(Listing? value) {
     _selectedListing = value;
     notifyListeners();
   }
 
-  Listing? get selectedListing => _selectedListing;
+  Item? get selectedItem => _selectedItem;
+  Item? _selectedItem;
+  set selectedItem(Item? value) {
+    _selectedItem = value;
+    notifyListeners();
+  }
+
+  void setSelectedItemById(String id) {
+    selectedItem = Item(id);
+  }
 
   int getSelectedListingById() {
-    if (_selectedListing == null || !listings.contains(_selectedListing))
+    if (_selectedListing == null || !listings.contains(_selectedListing)) {
       return 0;
+    }
     return listings.indexOf(_selectedListing!);
   }
 
   void setSelectedListingById(int id) {
-    if (id < 0 || id > listings.length - 1) {
-      return;
-    }
-    _selectedListing = listings[id];
-    notifyListeners();
+    selectedListing = listings[id];
+  }
+
+  @override
+  String toString() {
+    final listingIndex =
+        selectedListing != null ? listings.indexOf(selectedListing!) : -1;
+    final itemId = selectedItem?.id ?? '-';
+    return 'selectedListing(${listingIndex}), selectedItem(${itemId})';
   }
 }

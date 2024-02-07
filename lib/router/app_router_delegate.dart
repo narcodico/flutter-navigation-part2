@@ -1,7 +1,9 @@
 import 'dart:developer';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_navigation_part_2/router/app_route_path.dart';
+import 'package:flutter_navigation_part_2/router/item_route_path.dart';
 import 'package:flutter_navigation_part_2/router/listing_route_path.dart';
 import 'package:flutter_navigation_part_2/router/listings_route_path.dart';
 import 'package:flutter_navigation_part_2/router/settings_route_path.dart';
@@ -22,24 +24,19 @@ class AppRouterDelegate extends RouterDelegate<AppRoutePath>
   }
 
   @override
-  Future<void> setNewRoutePath(AppRoutePath config) async {
-    log('app: $config');
+  Future<void> setNewRoutePath(AppRoutePath config) {
+    log('setNewRoutePath: $config');
     if (config is ListingsRoutePath) {
       navigationState.selectedListing = null;
+      navigationState.selectedItem = null;
     } else if (config is ListingRoutePath) {
       navigationState.setSelectedListingById(config.id);
+      navigationState.selectedItem = null;
+    } else if (config is ItemRoutePath) {
+      navigationState.setSelectedListingById(config.id);
+      navigationState.setSelectedItemById(config.itemId);
     }
-    // if (config is ListingsRoutePath) {
-    //   // homeScreen
-    //   navigationState.selectedIndex = 0;
-    //   navigationState.selectedListing = null;
-    // } else if (config is ListingRoutePath) {
-    //   // nested home/ details screen
-    //   navigationState.setSelectedListingById(config.id);
-    // } else if (config is SettingsRoutePath) {
-    //   // setting screen
-    //   navigationState.selectedIndex = 1;
-    // }
+    return SynchronousFuture(null);
   }
 
   @override
@@ -69,14 +66,25 @@ class AppRouterDelegate extends RouterDelegate<AppRoutePath>
 
   @override
   AppRoutePath? get currentConfiguration {
+    AppRoutePath? routePath;
     if (navigationState.selectedIndex == 1) {
-      return SettingsRoutePath();
+      routePath = SettingsRoutePath();
+    } else if (navigationState.selectedListing == null) {
+      routePath = ListingsRoutePath();
+    } else if (navigationState.selectedListing != null &&
+        navigationState.selectedItem == null) {
+      routePath = ListingRoutePath(navigationState.getSelectedListingById());
+    } else if (navigationState.selectedListing != null &&
+        navigationState.selectedItem != null) {
+      routePath = ItemRoutePath(
+        navigationState.getSelectedListingById(),
+        navigationState.selectedItem!.id,
+      );
     } else {
-      if (navigationState.selectedListing == null) {
-        return ListingsRoutePath();
-      } else {
-        return ListingRoutePath(navigationState.getSelectedListingById());
-      }
+      routePath = null;
     }
+    log('app currentConfiguration: $routePath');
+    log('app currentConfiguration state: $navigationState');
+    return routePath;
   }
 }

@@ -24,7 +24,7 @@ class ListingsPage extends StatelessWidget {
               subtitle: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(listing.catagory),
+                  Text(listing.category),
                   Text(listing.chef),
                 ],
               ),

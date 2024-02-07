@@ -1,10 +1,13 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_navigation_part_2/router/app_route_path.dart';
-import 'package:flutter_navigation_part_2/screens/listing_page.dart';
-import 'package:flutter_navigation_part_2/screens/listings_page.dart';
 import 'package:flutter_navigation_part_2/state/navigation_state.dart';
 
-class ListingsRouterDelegate extends RouterDelegate<AppRoutePath>
+import '../screens/item_page.dart';
+import '../screens/items_page.dart';
+
+class ItemsRouterDelegate extends RouterDelegate<AppRoutePath>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin<AppRoutePath> {
   NavigationState _navigationState;
 
@@ -21,7 +24,7 @@ class ListingsRouterDelegate extends RouterDelegate<AppRoutePath>
     notifyListeners();
   }
 
-  ListingsRouterDelegate(this._navigationState);
+  ItemsRouterDelegate(this._navigationState);
 
   @override
   Widget build(BuildContext context) {
@@ -29,27 +32,25 @@ class ListingsRouterDelegate extends RouterDelegate<AppRoutePath>
       key: this.navigatorKey,
       pages: [
         MaterialPage(
-          child: ListingsPage(
-            listings: navigationState.listings,
-            onTap: (listing) {
-              navigationState.selectedListing = listing;
+          child: ItemsPage(
+            onTap: (item) {
+              navigationState.selectedItem = item;
               notifyListeners();
             },
           ),
           // name: '/listings',
         ),
-        if (navigationState.selectedListing != null)
+        if (navigationState.selectedItem != null)
           MaterialPage(
-            key: ValueKey(navigationState.selectedListing!),
-            child: ListingPage(
-              listing: navigationState.selectedListing!,
-              navigationState: navigationState,
+            key: ValueKey(navigationState.selectedItem!),
+            child: ItemPage(
+              item: navigationState.selectedItem!,
             ),
             // name: '/listings/${appState.selectedListing!.name}',
           )
       ],
       onPopPage: (route, result) {
-        navigationState.selectedListing = null;
+        navigationState.selectedItem = null;
         notifyListeners();
         return route.didPop(result);
       },
@@ -58,14 +59,17 @@ class ListingsRouterDelegate extends RouterDelegate<AppRoutePath>
 
   // @override
   // AppRoutePath? get currentConfiguration {
-  //   print('listings currentConfiguration $currentConfiguration');
-  //   if (navigationState.selectedListing != null) {
-  //     return ListingRoutePath(navigationState.getSelectedListingById());
+  //   print('items currentConfiguration $currentConfiguration');
+  //   if (navigationState.selectedItem != null) {
+  //     return ItemRoutePath(navigationState.getSelectedListingById(),
+  //         navigationState.selectedItem!.id);
   //   } else {
-  //     return ListingsRoutePath();
+  //     return ItemsRoutePath(navigationState.getSelectedListingById());
   //   }
   // }
 
   @override
-  Future<void> setNewRoutePath(AppRoutePath config) async {}
+  Future<void> setNewRoutePath(AppRoutePath config) async {
+    log('items: $config');
+  }
 }
