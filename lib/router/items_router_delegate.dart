@@ -1,14 +1,14 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_navigation_part_2/router/app_route_path.dart';
 import 'package:flutter_navigation_part_2/state/navigation_state.dart';
 
 import '../screens/item_page.dart';
 import '../screens/items_page.dart';
+import 'cubit/router_cubit.dart';
 
-class ItemsRouterDelegate extends RouterDelegate<AppRoutePath>
-    with ChangeNotifier, PopNavigatorRouterDelegateMixin<AppRoutePath> {
+class ItemsRouterDelegate extends RouterDelegate<RouteState>
+    with ChangeNotifier, PopNavigatorRouterDelegateMixin<RouteState> {
   NavigationState _navigationState;
 
   NavigationState get navigationState => _navigationState;
@@ -69,7 +69,7 @@ class ItemsRouterDelegate extends RouterDelegate<AppRoutePath>
   // }
 
   @override
-  Future<void> setNewRoutePath(AppRoutePath config) async {
+  Future<void> setNewRoutePath(RouteState config) async {
     log('items: $config');
   }
 }

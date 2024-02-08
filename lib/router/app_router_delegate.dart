@@ -2,18 +2,19 @@ import 'dart:developer';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_navigation_part_2/router/app_route_path.dart';
-import 'package:flutter_navigation_part_2/router/item_route_path.dart';
-import 'package:flutter_navigation_part_2/router/listing_route_path.dart';
-import 'package:flutter_navigation_part_2/router/listings_route_path.dart';
-import 'package:flutter_navigation_part_2/router/settings_route_path.dart';
+import 'package:flutter_navigation_part_2/router/cubit/item_route_state.dart';
+import 'package:flutter_navigation_part_2/router/cubit/listing_route_state.dart';
+import 'package:flutter_navigation_part_2/router/cubit/listings_route_state.dart';
+import 'package:flutter_navigation_part_2/router/cubit/settings_route_state.dart';
 import 'package:flutter_navigation_part_2/screens/app_shell.dart';
 import 'package:flutter_navigation_part_2/screens/listings_flow.dart';
 import 'package:flutter_navigation_part_2/screens/studio_flow.dart';
 import 'package:flutter_navigation_part_2/state/navigation_state.dart';
 
-class AppRouterDelegate extends RouterDelegate<AppRoutePath>
-    with ChangeNotifier, PopNavigatorRouterDelegateMixin<AppRoutePath> {
+import 'cubit/router_cubit.dart';
+
+class AppRouterDelegate extends RouterDelegate<RouteState>
+    with ChangeNotifier, PopNavigatorRouterDelegateMixin<RouteState> {
   final GlobalKey<NavigatorState> navigatorKey;
 
   // get app state instance
@@ -24,15 +25,15 @@ class AppRouterDelegate extends RouterDelegate<AppRoutePath>
   }
 
   @override
-  Future<void> setNewRoutePath(AppRoutePath config) {
+  Future<void> setNewRoutePath(RouteState config) {
     log('setNewRoutePath: $config');
-    if (config is ListingsRoutePath) {
+    if (config is ListingsRouteState) {
       navigationState.selectedListing = null;
       navigationState.selectedItem = null;
-    } else if (config is ListingRoutePath) {
+    } else if (config is ListingRouteState) {
       navigationState.setSelectedListingById(config.id);
       navigationState.selectedItem = null;
-    } else if (config is ItemRoutePath) {
+    } else if (config is ItemRouteState) {
       navigationState.setSelectedListingById(config.id);
       navigationState.setSelectedItemById(config.itemId);
     }
@@ -65,26 +66,26 @@ class AppRouterDelegate extends RouterDelegate<AppRoutePath>
   }
 
   @override
-  AppRoutePath? get currentConfiguration {
-    AppRoutePath? routePath;
+  RouteState? get currentConfiguration {
+    RouteState? routeState;
     if (navigationState.selectedIndex == 1) {
-      routePath = SettingsRoutePath();
+      routeState = SettingsRouteState();
     } else if (navigationState.selectedListing == null) {
-      routePath = ListingsRoutePath();
+      routeState = ListingsRouteState();
     } else if (navigationState.selectedListing != null &&
         navigationState.selectedItem == null) {
-      routePath = ListingRoutePath(navigationState.getSelectedListingById());
+      routeState = ListingRouteState(navigationState.getSelectedListingById());
     } else if (navigationState.selectedListing != null &&
         navigationState.selectedItem != null) {
-      routePath = ItemRoutePath(
+      routeState = ItemRouteState(
         navigationState.getSelectedListingById(),
         navigationState.selectedItem!.id,
       );
     } else {
-      routePath = null;
+      routeState = null;
     }
-    log('app currentConfiguration: $routePath');
+    log('app currentConfiguration: $routeState');
     log('app currentConfiguration state: $navigationState');
-    return routePath;
+    return routeState;
   }
 }

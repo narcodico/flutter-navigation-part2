@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_navigation_part_2/router/app_route_path.dart';
 import 'package:flutter_navigation_part_2/screens/listing_page.dart';
 import 'package:flutter_navigation_part_2/screens/listings_page.dart';
 import 'package:flutter_navigation_part_2/state/navigation_state.dart';
 
-class ListingsRouterDelegate extends RouterDelegate<AppRoutePath>
-    with ChangeNotifier, PopNavigatorRouterDelegateMixin<AppRoutePath> {
+import 'cubit/router_cubit.dart';
+
+class ListingsRouterDelegate extends RouterDelegate<RouteState>
+    with ChangeNotifier, PopNavigatorRouterDelegateMixin<RouteState> {
   NavigationState _navigationState;
 
   NavigationState get navigationState => _navigationState;
@@ -67,5 +68,5 @@ class ListingsRouterDelegate extends RouterDelegate<AppRoutePath>
   // }
 
   @override
-  Future<void> setNewRoutePath(AppRoutePath config) async {}
+  Future<void> setNewRoutePath(RouteState config) async {}
 }
