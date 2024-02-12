@@ -41,11 +41,11 @@ class AppRouteInformationParser extends RouteInformationParser<RouteState> {
       return RouteInformation(
           uri: Uri(path: '/listings/${config.id}/${config.itemId}'));
     }
-    if (config is ListingsRouteState) {
-      return RouteInformation(uri: Uri(path: '/listings'));
-    }
     if (config is ListingRouteState) {
       return RouteInformation(uri: Uri(path: '/listings/${config.id}'));
+    }
+    if (config is ListingsRouteState) {
+      return RouteInformation(uri: Uri(path: '/listings'));
     }
     if (config is SettingsRouteState) {
       return RouteInformation(uri: Uri(path: '/settings'));

@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_navigation_part_2/state/navigation_state.dart';
 
 class StudioFlow extends StatefulWidget {
-  final NavigationState navigationState;
+  const StudioFlow._();
 
-  const StudioFlow({required this.navigationState});
-
-  static MaterialPage<void> page({required NavigationState navigationState}) =>
-      MaterialPage(
+  static MaterialPage<void> page() => MaterialPage(
         key: ValueKey('studio-flow'),
-        child: StudioFlow(navigationState: navigationState),
+        child: StudioFlow._(),
       );
 
   @override
@@ -19,27 +15,26 @@ class StudioFlow extends StatefulWidget {
 class _StudioFlowState extends State<StudioFlow> {
   @override
   Widget build(BuildContext context) {
-    var navigationState = widget.navigationState;
     return Scaffold(
       body: Center(
         child: Text('Studio page'),
       ),
-      bottomNavigationBar: BottomNavigationBar(
-        items: [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home),
-            label: 'Home',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.settings),
-            label: 'Settings',
-          ),
-        ],
-        currentIndex: navigationState.selectedIndex,
-        onTap: (inx) {
-          navigationState.selectedIndex = inx;
-        },
-      ),
+      // bottomNavigationBar: BottomNavigationBar(
+      //   items: [
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.home),
+      //       label: 'Home',
+      //     ),
+      //     BottomNavigationBarItem(
+      //       icon: Icon(Icons.settings),
+      //       label: 'Settings',
+      //     ),
+      //   ],
+      //   currentIndex: navigationState.selectedIndex,
+      //   onTap: (inx) {
+      //     navigationState.selectedIndex = inx;
+      //   },
+      // ),
     );
   }
 }

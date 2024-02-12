@@ -1,30 +1,14 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_navigation_part_2/state/navigation_state.dart';
 
-import '../screens/item_page.dart';
 import '../screens/items_page.dart';
 import 'cubit/router_cubit.dart';
 
 class ItemsRouterDelegate extends RouterDelegate<RouteState>
     with ChangeNotifier, PopNavigatorRouterDelegateMixin<RouteState> {
-  NavigationState _navigationState;
-
-  NavigationState get navigationState => _navigationState;
-
   @override
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
-
-  set navigationState(NavigationState newState) {
-    if (newState == _navigationState) {
-      return;
-    }
-    _navigationState = newState;
-    notifyListeners();
-  }
-
-  ItemsRouterDelegate(this._navigationState);
 
   @override
   Widget build(BuildContext context) {
@@ -34,24 +18,27 @@ class ItemsRouterDelegate extends RouterDelegate<RouteState>
         MaterialPage(
           child: ItemsPage(
             onTap: (item) {
-              navigationState.selectedItem = item;
-              notifyListeners();
+              //todo
+              // navigationState.selectedItem = item;
+              // notifyListeners();
             },
           ),
           // name: '/listings',
         ),
-        if (navigationState.selectedItem != null)
-          MaterialPage(
-            key: ValueKey(navigationState.selectedItem!),
-            child: ItemPage(
-              item: navigationState.selectedItem!,
-            ),
-            // name: '/listings/${appState.selectedListing!.name}',
-          )
+        //todo
+        // if (navigationState.selectedItem != null)
+        //   MaterialPage(
+        //     key: ValueKey(navigationState.selectedItem!),
+        //     child: ItemPage(
+        //       item: navigationState.selectedItem!,
+        //     ),
+        //     // name: '/listings/${appState.selectedListing!.name}',
+        //   )
       ],
       onPopPage: (route, result) {
-        navigationState.selectedItem = null;
-        notifyListeners();
+        // todo
+        // navigationState.selectedItem = null;
+        // notifyListeners();
         return route.didPop(result);
       },
     );
